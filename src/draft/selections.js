@@ -2,12 +2,11 @@ import React from 'react';
 import api from '../api/api';
 
 
-export default class Draft extends React.Component {
+export default class Selections extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      players: [],
-      teams: []
+      picks: []
     }
   }
 

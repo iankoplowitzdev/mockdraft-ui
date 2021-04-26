@@ -5,6 +5,10 @@ const api = {
   getPlayers: async () => {
     const response = await axios.get(`${url}/players`);
     return response;
+  },
+  getTeams: async () => {
+    const response = await axios.get(`${url}/teams`);
+    return response;
   }
 }
 
