@@ -1,13 +1,14 @@
 import React from 'react';
 import api from '../api/api';
-
+import playerService from '../services/playerService';
 
 export default class Draft extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       players: [],
-      teams: []
+      teams: [],
+      picks: []
     }
   }
 
@@ -20,34 +21,37 @@ export default class Draft extends React.Component {
     })
 
     const apiTeams = await api.getTeams();
+    const teams = apiTeams.data;
 
-    console.log(apiTeams);
+    let tempOrder = [];
+
+    for (let i = 0; i < teams.length; i++) {
+      const team = teams[i];
+      const teamPicks = team.picks;
+      for (let j = 0; j < teamPicks.length; j++) {
+        tempOrder[teamPicks[j]] = team;
+        const pick = await playerService.makeSelection(i, team, sortedPlayers);
+        tempOrder[teamPicks[j]].pick = pick;
+      }
+    }
+
     this.setState({
       players: sortedPlayers,
-      teams: apiTeams.data
+      teams: teams,
+      picks: tempOrder
     })
   }
 
   render() {
-    const { players, teams } = this.state;
+    const { players, teams, picks } = this.state;
     return (
       <div className="container">
         <div className="row">
           <div className="col-sm">
-            <ol>
-              {players.map(item => (
-                <li key={item.id}>
-                  {item.firstName} {item.lastName} - {item.position} - {item.program}
-                </li>
-              ))}
-            </ol>
-
-          </div>
-          <div className="col-sm">
             <ul>
-              {teams.map(item => (
-                <li key={item.id}>
-                  {item.city} {item.name}
+              {picks.map(team => (
+                <li key={team.id}>
+                  {team.city} {team.name} - {team.pick.firstName} {team.pick.lastName}
                 </li>
               ))}
             </ul>
