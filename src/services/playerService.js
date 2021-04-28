@@ -13,7 +13,12 @@ const logic = {
       reSelection = !selectionService.positionIsInPool(position, players, selectionPool);
     }
 
-    return selectionService.makeSelection(position, selectionPool, players);
+    const finalSelection = selectionService.makeSelection(position, selectionPool, players);
+
+    // This is an arbitrary need adjustment.
+    // @todo: add positional need adjustments to mongo db
+    team.needs[position] = team.needs[position] - 10;
+    return finalSelection;
   }
 }
 

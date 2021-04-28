@@ -21,7 +21,6 @@ const selectionLogic = {
         pool.push(i);
       }
     }
-    // console.log(pool);
     return pool;
   },
   positionIsInPool: (position, players, selectionPool) => {
