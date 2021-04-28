@@ -14,22 +14,21 @@ const selectionLogic = {
     const determinedPosition = aggregate[Math.floor(Math.random() * aggregate.length)];
     return determinedPosition;
   },
-  getSelectionPool: async (currentSelection, players) => {
-    const pool = players.slice(0, currentSelection + 5);
-    console.log(pool);
-
-    for (let i = 0; i < pool.length; i++) {
-      if (pool[i].selected) {
-        pool.splice(i, 1);
+  getSelectionPool: async (currentSelection, players, range) => {
+    let pool = [];
+    for (let i = 0; i < currentSelection + range; i++) {
+      if (!players[i].selected) {
+        pool.push(i);
       }
     }
-  
+    // console.log(pool);
     return pool;
   },
-  positionIsInPool: (position, selectionPool) => {
+  positionIsInPool: (position, players, selectionPool) => {
     for (let i = 0; i < selectionPool.length; i++) {
-      const currectPosition = selectionPool[i].position;
-      if (currectPosition === position) {
+      const playersListIndex = selectionPool[i];
+      const currentPosition = players[playersListIndex].position;
+      if (currentPosition === position) {
         return true;
       }
     }
@@ -37,17 +36,14 @@ const selectionLogic = {
     return false;
   },
   makeSelection: (position, selectionPool, players) => {
+    let playerToSelect = 0;
     for (let i = 0; i < selectionPool.length; i++) {
-      const currectPosition = selectionPool[i].position;
-      if (currectPosition === position) {
-        for (let j = 0; j < players.length; j++) {
-          if (players[j].firstName === selectionPool[i].firstName && players[j].lastName === selectionPool[i].lastName) {
-            players[j].selected = true;
-            console.log(players[j]);
-            break;
-          }
-        }
-        return selectionPool[i];
+      const playersListIndex = selectionPool[i];
+      const currentPosition = players[playersListIndex].position;
+      if (currentPosition === position) {
+        playerToSelect = players[playersListIndex];
+        players[playersListIndex].selected = true;
+        return playerToSelect;
       }
     }
   }

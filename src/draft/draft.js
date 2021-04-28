@@ -29,10 +29,18 @@ export default class Draft extends React.Component {
       const team = teams[i];
       const teamPicks = team.picks;
       for (let j = 0; j < teamPicks.length; j++) {
-        tempOrder[teamPicks[j]] = team;
-        const pick = await playerService.makeSelection(i, team, sortedPlayers);
-        tempOrder[teamPicks[j]].pick = pick;
+        tempOrder[teamPicks[j] -1] = {
+          name: team.name,
+          city: team.city,
+          needs: team.needs
+        };
       }
+    }
+
+    for (let i = 0; i < tempOrder.length; i++) {
+      const team = tempOrder[i];
+      const pick = await playerService.makeSelection(i, team, sortedPlayers);
+      tempOrder[i].pick = pick;
     }
 
     this.setState({
