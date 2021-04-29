@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../api/api';
-import playerService from '../services/playerService';
+import selectionService from '../services/selectionService';
 
 export default class Draft extends React.Component {
   constructor(props) {
@@ -23,6 +23,9 @@ export default class Draft extends React.Component {
     const apiTeams = await api.getTeams();
     const teams = apiTeams.data;
 
+    const apiPositions = await api.getPositions();
+    const positions = apiPositions.data;
+
     let tempOrder = [];
 
     for (let i = 0; i < teams.length; i++) {
@@ -39,7 +42,7 @@ export default class Draft extends React.Component {
 
     for (let i = 0; i < tempOrder.length; i++) {
       const team = tempOrder[i];
-      const pick = await playerService.makeSelection(i, team, sortedPlayers);
+      const pick = await selectionService.makeSelection(i, team, sortedPlayers, positions);
       tempOrder[i].pick = pick;
     }
 

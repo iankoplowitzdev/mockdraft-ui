@@ -1,4 +1,24 @@
-const selectionLogic = {
+const selectionLogic = {  
+  makeSelection: async (selection, team, players, positions) => {
+    let selectionPool = null;
+    let position = null;
+    let reSelection = true; 
+    let selectionPoolRange = 4;
+
+    while (reSelection) {
+      selectionPool = await selectionLogic.getSelectionPool(selection, players, selectionPoolRange++);
+      position = selectionLogic.generateSelectionPosition(team.needs);
+      reSelection = !selectionLogic.positionIsInPool(position, players, selectionPool);
+    }
+
+    const finalSelection = selectionLogic.selectPlayer(position, selectionPool, players);
+
+    // This is an arbitrary need adjustment.
+    // @todo: add positional need adjustments to mongo db
+    const apiPosition = selectionLogic._getPosition(positions, position);
+    team.needs[position] = selectionLogic._determinePositionalNeed(team.needs[position], apiPosition.pickAdjustment[0]);
+    return finalSelection;
+  },
   generateSelectionPosition: (needs) => {
     const keys = Object.keys(needs);
   
@@ -34,7 +54,7 @@ const selectionLogic = {
 
     return false;
   },
-  makeSelection: (position, selectionPool, players) => {
+  selectPlayer: (position, selectionPool, players) => {
     let playerToSelect = 0;
     for (let i = 0; i < selectionPool.length; i++) {
       const playersListIndex = selectionPool[i];
@@ -45,6 +65,21 @@ const selectionLogic = {
         return playerToSelect;
       }
     }
+  },
+  _getPosition: (positions, positionAbbreviation) => {
+    for (let i = 0; i < positions.length; i++) {
+      const currentPosition = positions[i];
+      if (currentPosition.abbreviation == positionAbbreviation) {
+        return currentPosition;
+      }
+    }
+  },
+  _determinePositionalNeed (teamNeedValue, positionalDecrease) {
+    if (positionalDecrease > teamNeedValue) {
+      return 0;
+    }
+
+    return teamNeedValue - positionalDecrease;
   }
 };
 

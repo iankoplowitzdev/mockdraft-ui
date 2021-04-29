@@ -9,6 +9,10 @@ const api = {
   getTeams: async () => {
     const response = await axios.get(`${url}/teams`);
     return response;
+  },
+  getPositions: async () => {
+    const response = await axios.get(`${url}/positions`);
+    return response;
   }
 }
 
