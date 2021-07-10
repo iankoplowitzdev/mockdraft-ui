@@ -1,11 +1,14 @@
 import React from 'react';
 import api from '../api/api';
 import selectionService from '../services/selectionService';
+import Button from 'react-bootstrap/Button';
+
 
 export default class Draft extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedTeam: props.team,
       players: [],
       teams: [],
       picks: []
@@ -57,6 +60,8 @@ export default class Draft extends React.Component {
     const { players, teams, picks } = this.state;
     return (
       <div className="container">
+        <Button variant="primary" onClick={() => this.props.setScreen("options")}>Back</Button>
+        {this.state.selectedTeam}
         <div className="row">
           <div className="col-sm">
             <ul>

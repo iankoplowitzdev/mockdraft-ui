@@ -13,8 +13,6 @@ const selectionLogic = {
 
     const finalSelection = selectionLogic.selectPlayer(position, selectionPool, players);
 
-    // This is an arbitrary need adjustment.
-    // @todo: add positional need adjustments to mongo db
     const apiPosition = selectionLogic._getPosition(positions, position);
     team.needs[position] = selectionLogic._determinePositionalNeed(team.needs[position], apiPosition.pickAdjustment[0]);
     return finalSelection;
