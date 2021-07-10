@@ -132,10 +132,7 @@ export default class Options extends React.Component {
         </Row>
         <Row className="mb-2">
           <Col>
-            <h3>Selected team: {this.props.team}</h3>
-          </Col>
-          <Col>
-            <Button variant="success" onClick={() => this.props.setScreen("draft")}>Next</Button>
+            <Button variant={this.props.team ? "success" : "secondary"} onClick={() => this.props.setScreen("draft")} disabled={!this.props.team}>Next</Button>
           </Col>
         </Row>
       </Container>

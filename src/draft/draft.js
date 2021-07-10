@@ -61,7 +61,6 @@ export default class Draft extends React.Component {
     return (
       <div className="container">
         <Button variant="primary" onClick={() => this.props.setScreen("options")}>Back</Button>
-        {this.state.selectedTeam}
         <div className="row">
           <div className="col-sm">
             <ul>

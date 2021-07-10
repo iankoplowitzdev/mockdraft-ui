@@ -10,6 +10,14 @@ function Screens(props) {
   return <Draft team={props.team} setScreen={props.setScreen}/>
 }
 
+function HeaderMessage(props) {
+  if(props.team) {
+    return <span>| Selected team: {props.team}</span>
+  }
+
+  return <span></span>
+}
+
 function App() {
   const [screen, setScreen] = useState("options");
   const [team, setTeam] = useState(null);
@@ -17,7 +25,8 @@ function App() {
   return (
     <div>
       <Navbar>
-        <Navbar.Brand>NFL Mock Draft Simulator</Navbar.Brand>
+        <Navbar.Brand>NFL Mock Draft Simulator <HeaderMessage team={team} /></Navbar.Brand>
+        
       </Navbar>
       <Screens screen={screen} setScreen={setScreen} team={team} setTeam={setTeam}/>
     </div>
