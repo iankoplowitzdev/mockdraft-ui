@@ -4,7 +4,7 @@ import selectionService from '../services/selectionService';
 import Button from 'react-bootstrap/Button';
 
 
-export default class Draft extends React.Component {
+export default class Room extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

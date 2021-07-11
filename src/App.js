@@ -1,14 +1,16 @@
-import Draft from './draft/draft';
+import React, { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-import Options from './draft/options';
-import { useState } from 'react';
+import Nav from 'react-bootstrap/Nav';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Draft from './draft'
+import Home from './home'
 
-function Screens(props) {
-  if(props.screen === "options") {
-    return <Options team={props.team} setTeam={props.setTeam} setScreen={props.setScreen}/>
-  }
-  return <Draft team={props.team} setScreen={props.setScreen}/>
-}
+
 
 function HeaderMessage(props) {
   if(props.team) {
@@ -23,13 +25,28 @@ function App() {
   const [team, setTeam] = useState(null);
 
   return (
-    <div>
+    <Router>
       <Navbar>
-        <Navbar.Brand>NFL Mock Draft Simulator <HeaderMessage team={team} /></Navbar.Brand>
-        
+        <Navbar.Brand href="/">
+          NFL Mock Draft Simulator
+          <HeaderMessage team={team} />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Link href="/draft">Draft</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
-      <Screens screen={screen} setScreen={setScreen} team={team} setTeam={setTeam}/>
-    </div>
+      <Switch>
+        <Route path="/draft">
+          <Draft />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
