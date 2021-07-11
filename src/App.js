@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import Draft from './components/draft'
 import Home from './components/home'
+import About from './components/about'
+
 
 function App() {
   return (
@@ -19,11 +21,17 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
+            <Nav.Link href="/about">About</Nav.Link>
+          </Nav>
+          <Nav>
             <Nav.Link href="/draft">Draft</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
       <Switch>
+        <Route path="/about">
+          <About />
+        </Route>
         <Route path="/draft">
           <Draft />
         </Route>
