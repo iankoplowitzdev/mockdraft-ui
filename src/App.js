@@ -7,8 +7,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Draft from './draft'
-import Home from './home'
+import Draft from './components/draft'
+import Home from './components/home'
 
 
 
