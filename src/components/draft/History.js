@@ -15,7 +15,7 @@ export default function History(props) {
   const renderableHistory = pickHistory.map((pick) =>
     <Card className="mb-2">
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
-        <span>{pick.firstName} {pick.lastName} | {pick.position} | {pick.program}</span>
+        <span>{pick.team.name} - {pick.firstName} {pick.lastName}</span>
       </Card.Body>
     </Card>
   );

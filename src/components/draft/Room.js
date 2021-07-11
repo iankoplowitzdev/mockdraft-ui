@@ -29,6 +29,7 @@ export default class Room extends React.Component {
     const team = this.state.draftOrder[0];
     const pick = await selectionService.makeSelection(team, this.state.availablePlayers, this.state.positions);
     const history = this.state.pickHistory;
+    pick.team = team;
     history.push(pick);
     this.setState({
       draftOrder: this.state.draftOrder.slice(1),
