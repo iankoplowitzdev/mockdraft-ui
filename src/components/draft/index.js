@@ -7,7 +7,7 @@ function Screens(props) {
   if(props.screen === "options") {
     return <Options team={props.team} setTeam={props.setTeam} setScreen={props.setScreen}/>
   }
-  return <Room team={props.team} setScreen={props.setScreen}/>
+  return <Room usersTeam={props.team} setScreen={props.setScreen}/>
 }
 
 export default function Draft() {

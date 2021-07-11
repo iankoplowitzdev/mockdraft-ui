@@ -6,10 +6,6 @@ import Button from 'react-bootstrap/Button';
 
 
 export default class Options extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Container>

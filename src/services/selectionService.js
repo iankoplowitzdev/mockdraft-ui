@@ -1,12 +1,12 @@
 const selectionLogic = {  
-  makeSelection: async (selection, team, players, positions) => {
+  makeSelection: async (team, players, positions) => {
     let selectionPool = null;
     let position = null;
     let reSelection = true; 
     let selectionPoolRange = 4;
 
     while (reSelection) {
-      selectionPool = await selectionLogic.getSelectionPool(selection, players, selectionPoolRange++);
+      selectionPool = await selectionLogic.getSelectionPool(players, selectionPoolRange++);
       position = selectionLogic.generateSelectionPosition(team.needs);
       reSelection = !selectionLogic.positionIsInPool(position, players, selectionPool);
     }
@@ -32,9 +32,9 @@ const selectionLogic = {
     const determinedPosition = aggregate[Math.floor(Math.random() * aggregate.length)];
     return determinedPosition;
   },
-  getSelectionPool: async (currentSelection, players, range) => {
+  getSelectionPool: async (players, range) => {
     let pool = [];
-    for (let i = 0; i < currentSelection + range; i++) {
+    for (let i = 0; i < range; i++) {
       if (!players[i].selected) {
         pool.push(i);
       }
@@ -67,7 +67,7 @@ const selectionLogic = {
   _getPosition: (positions, positionAbbreviation) => {
     for (let i = 0; i < positions.length; i++) {
       const currentPosition = positions[i];
-      if (currentPosition.abbreviation == positionAbbreviation) {
+      if (currentPosition.abbreviation === positionAbbreviation) {
         return currentPosition;
       }
     }

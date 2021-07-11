@@ -3,9 +3,9 @@ import api from '../../api/api';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 import PlayerList from './PlayerList';
 import History from './History';
+import selectionService from '../../services/selectionService';
 
 
 
@@ -13,12 +13,32 @@ export default class Room extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      players: [],
+      availablePlayers: [],
       usersTurn: false,
-      team: this.props.team,
-      pickHistory: []
+      usersTeam: this.props.usersTeam,
+      pickHistory: [],
+      draftOrder: [],
+      positions: [],
+      pickInterval: null
     }
+    this.makePick = this.makePick.bind(this);
   };
+
+  async makePick() {
+    const interval = this.state.pickInterval;
+    const team = this.state.draftOrder[0];
+    const pick = await selectionService.makeSelection(team, this.state.availablePlayers, this.state.positions);
+    const history = this.state.pickHistory;
+    history.push(pick);
+    this.setState({
+      draftOrder: this.state.draftOrder.slice(1),
+      pickHistory: history
+    })
+
+    if (this.state.draftOrder.length === 0) {
+      clearInterval(this.state.pickInterval);
+    }
+  }
 
   async componentDidMount() {
     const apiPlayers = await api.getPlayers();
@@ -27,8 +47,6 @@ export default class Room extends React.Component {
     sortedPlayers.map((player) => {
       player.selected = false;
     })
-
-    this.setState({players: sortedPlayers});
 
     const apiTeams = await api.getTeams();
     const teams = apiTeams.data;
@@ -49,6 +67,15 @@ export default class Room extends React.Component {
         };
       }
     }
+
+    this.setState({
+      draftOrder: tempOrder,
+      availablePlayers: sortedPlayers,
+      positions: positions
+    });
+
+    const interval = setInterval(this.makePick, 100);
+    this.setState({pickInterval: interval})
   }
 
   render() {
@@ -56,10 +83,17 @@ export default class Room extends React.Component {
       <Container>
         <Row>
           <Col>
-            <PlayerList players={this.state.players}/>
+            <h3>Picking for: {this.state.usersTeam}</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <PlayerList players={this.state.availablePlayers}/>
           </Col>
           <Col>
-            <History />
+            <History
+              players={this.state.players}
+              pickHistory={this.state.pickHistory}/>
           </Col>
         </Row>
       </Container>

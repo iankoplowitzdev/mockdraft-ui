@@ -1,35 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import Draft from './components/draft'
 import Home from './components/home'
 
-
-
-function HeaderMessage(props) {
-  if(props.team) {
-    return <span>| Selected team: {props.team}</span>
-  }
-
-  return <span></span>
-}
-
 function App() {
-  const [screen, setScreen] = useState("options");
-  const [team, setTeam] = useState(null);
-
   return (
     <Router>
       <Navbar>
         <Navbar.Brand href="/">
           NFL Mock Draft Simulator
-          <HeaderMessage team={team} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
