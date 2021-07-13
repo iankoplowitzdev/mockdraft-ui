@@ -29,4 +29,4 @@ yarn start
 
 | File | Description |
 |-|-|
-| `src/scripts/pullPff.js` | `JavaScript` script that pulls the publicly available player data from the Pro Football Focus API. This was used to populate my database with its data. |
+| [`src/scripts/pullPff.js`](src/scripts/pullPff.js) | `JavaScript` script that pulls the publicly available player data from the Pro Football Focus API. This was used to populate my database with its data. |
