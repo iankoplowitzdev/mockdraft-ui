@@ -8,6 +8,10 @@ import styles from './PlayerList.module.css';
 
 export default function PlayerList(props) {
   const incomingPlayerList = props.players;
+  if (!incomingPlayerList || incomingPlayerList === 0) {
+    return(<span>Loading...</span>)
+  }
+
   const renderablePlayerList = incomingPlayerList.map((player) =>
     <Card className="mb-2">
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
@@ -17,19 +21,13 @@ export default function PlayerList(props) {
     </Card>
   );
 
-  if (incomingPlayerList.length > 0) {
-    return (
-      <Container>
-        <Row>
-          <Col>
-            <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
-          </Col>
-        </Row>
-      </Container>
-    )
-  }
-  
-  return(<span>Loading...</span>)
-
-
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
+        </Col>
+      </Row>
+    </Container>
+  )
 }
