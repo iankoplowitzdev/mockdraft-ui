@@ -14,7 +14,7 @@
 
 ## Description
 
-This project contains the user interfact components for the mock draft simulator project. With this project, you're able to run a mock NFL draft as the general manager of a franchise, and select the player you want from the pool of available players.
+This project contains the user interface components for the mock draft simulator project. With this project, you're able to run a mock NFL draft as the general manager of a franchise, and select the player you want from the pool of available players.
 
 ## Development
 
