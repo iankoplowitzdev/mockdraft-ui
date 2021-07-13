@@ -17,7 +17,7 @@ This project contains the user interface components for the mock draft simulator
 
 ## Development
 
-To develop the project, you must have the API running on port 3002. It's currently configured hard-coded to point to localhost, but that will change once I have an alpha version of the project and configure DNS in Route53.
+To develop the project, you must have the API running on port 3002. It's currently hard-coded to point to localhost, but that will change once I have an alpha version of the project and configure DNS in Route53.
 
 Running the developmental server simply requires you to start it with yarn using the following command:
 ```bash
