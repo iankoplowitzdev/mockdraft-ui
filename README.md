@@ -10,6 +10,7 @@
 ## Table of Contents <!-- omit in toc -->
 - [Description](#description)
 - [Development](#development)
+- [Notable Files](#notable-files)
 
 ## Description
 
@@ -23,3 +24,9 @@ Running the developmental server simply requires you to start it with yarn using
 ```bash
 yarn start
 ```
+
+## Notable Files
+
+| File | Description |
+|-|-|
+| `src/scripts/pullPff.js` | `JavaScript` script that pulls the publicly available player data from the Pro Football Focus API. This was used to populate my database with its data. |
