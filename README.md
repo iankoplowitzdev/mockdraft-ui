@@ -1,7 +1,6 @@
 <!--lint disable no-literal-urls-->
 <p align="center">
   <img
-      alt="Node.js"
       src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/NFL_Draft_logo.svg/1200px-NFL_Draft_logo.svg.png"
       width="400"
    />
