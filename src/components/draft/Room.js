@@ -1,103 +1,85 @@
-import React from 'react'; 
-import api from '../../api/api';
+import React, { useEffect, useState } from 'react'; 
+import Api from '../../api/Api';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import PlayerList from './PlayerList';
 import History from './History';
 import selectionService from '../../services/selectionService';
 
 
 
-export default class Room extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      availablePlayers: [],
-      usersTurn: false,
-      usersTeam: this.props.usersTeam,
-      pickHistory: [],
-      draftOrder: [],
-      positions: [],
-      pickInterval: null
-    }
-    this.makePick = this.makePick.bind(this);
-  };
+export default function Room(props) {
+  const [pickHistory, setPickHistory] = useState([]);
 
-  async makePick() {
-    const interval = this.state.pickInterval;
-    const team = this.state.draftOrder[0];
-    const pick = await selectionService.makeSelection(team, this.state.availablePlayers, this.state.positions);
-    const history = this.state.pickHistory;
-    pick.team = team;
-    history.push(pick);
-    this.setState({
-      draftOrder: this.state.draftOrder.slice(1),
-      pickHistory: history
-    })
+  useEffect(() => {
 
-    if (this.state.draftOrder.length === 0) {
-      clearInterval(this.state.pickInterval);
-    }
-  }
+    console.log(props.draftOrder);
 
-  async componentDidMount() {
-    const apiPlayers = await api.getPlayers();
-    const sortedPlayers = apiPlayers.data.sort((p1, p2) => (p1.rank > p2.rank) ? 1 : -1);
-
-    sortedPlayers.map((player) => {
-      player.selected = false;
-    })
-
-    const apiTeams = await api.getTeams();
-    const teams = apiTeams.data;
-
-    const apiPositions = await api.getPositions();
-    const positions = apiPositions.data;
-
-    let tempOrder = [];
-
-    for (let i = 0; i < teams.length; i++) {
-      const team = teams[i];
-      const teamPicks = team.picks;
-      for (let j = 0; j < teamPicks.length; j++) {
-        tempOrder[teamPicks[j] -1] = {
-          name: team.name,
-          city: team.city,
-          needs: team.needs
-        };
-      }
+    if (props.draftOrder.length === 0 || !props.canStartDraft){
+      return;
     }
 
-    this.setState({
-      draftOrder: tempOrder,
-      availablePlayers: sortedPlayers,
-      positions: positions
-    });
+    if (props.draftOrder[0].abbreviation === props.usersTeam.abbreviation) {
+      return;
+    }
 
-    const interval = setInterval(this.makePick, 100);
-    this.setState({pickInterval: interval})
+
+
+    setTimeout(() => {
+      const team = props.draftOrder[0];
+      const pick = selectionService.makeSelection(team, props.availablePlayers, props.positions);
+      const history = pickHistory;
+      pick.team = team;
+      history.push(pick);
+      props.setDraftOrder(props.draftOrder.slice(1));
+      setPickHistory(history);
+
+      const playerIndexToRemove = selectionService.findPlayerIndexInAvailablePlayers(pick._id, props.availablePlayers);
+      props.availablePlayers.splice(playerIndexToRemove, 1)
+      props.setAvailablePlayers(props.availablePlayers);
+    }, 1000)
+
+ 
+  });
+
+  function startDraft() {
+    props.setCanStartDraft(true);
   }
 
-  render() {
-    return (
-      <Container>
-        <Row>
-          <Col>
-            <h3>Picking for: {this.state.usersTeam}</h3>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <PlayerList players={this.state.availablePlayers}/>
-          </Col>
-          <Col>
-            <History
-              players={this.state.players}
-              pickHistory={this.state.pickHistory}/>
-          </Col>
-        </Row>
-      </Container>
-    )
+  function selectPlayer(player) {
+    const history = pickHistory;
+    player.team = props.usersTeam;
+    history.push(player);
+    props.setDraftOrder(props.draftOrder.slice(1));
+    setPickHistory(history);
+
+    const playerIndexToRemove = selectionService.findPlayerIndexInAvailablePlayers(player._id, props.availablePlayers);
+    props.availablePlayers.splice(playerIndexToRemove, 1)
+    props.setAvailablePlayers(props.availablePlayers);
   }
-}
+
+
+
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <h3>Picking for: {props.usersTeam.name}</h3>
+          <Button variant="primary" disabled={props.canStartDraft} onClick={startDraft}>
+            Start draft!
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <PlayerList isUsersTurn={props.draftOrder[0].abbreviation === props.usersTeam.abbreviation} selectPlayer={selectPlayer} players={props.availablePlayers}/>
+        </Col>
+        <Col>
+          <History pickHistory={pickHistory}/>
+        </Col>
+      </Row>
+    </Container>
+  )
+} 
