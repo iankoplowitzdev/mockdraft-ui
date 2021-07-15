@@ -1,20 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Options from './Options';
 import Room from './Room';
+import api from '../../api/Api';
+
 
 
 function Screens(props) {
   if(props.screen === "options") {
-    return <Options team={props.team} setTeam={props.setTeam} setScreen={props.setScreen}/>
+    return <Options
+      usersTeam={props.usersTeam}
+      setUsersTeam={props.setUsersTeam}
+      setScreen={props.setScreen}
+      nflTeams={props.nflTeams}/>
   }
-  return <Room usersTeam={props.team} setScreen={props.setScreen}/>
+  return <Room
+    usersTeam={props.usersTeam}
+    setScreen={props.setScreen}
+    nflTeams={props.nflTeams}/>
 }
 
 export default function Draft() {
   const [screen, setScreen] = useState('options');
-  const [team, setTeam] = useState();
+  const [usersTeam, setUsersTeam] = useState();
+  const [nflTeams, setNflTeams] = useState();
+
+  useEffect(async () => {
+    const apiTeams = await api.getTeams();
+    setNflTeams(apiTeams.data);
+  }, []);
 
   return(
-    <Screens screen={screen} setScreen={setScreen} team={team} setTeam={setTeam}/>
+    <Screens
+      screen={screen}
+      setScreen={setScreen}
+      usersTeam={usersTeam}
+      setUsersTeam={setUsersTeam}
+      nflTeams={nflTeams}/>
   )
 }

@@ -4,134 +4,35 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
+function TeamList(props) {
+  const renderedTeams = props.teams.map((team) => 
+    <Col className="mb-2" md={3}>
+      <Button className="w-100" variant="primary" onClick={() => props.setUsersTeam(team)}>{team.name}</Button>
+    </Col>
+  );
 
-export default class Options extends React.Component {
-  render() {
-    return (
-      <Container>
-        <Row className="mb-2">
-          <Col>
-            <h2>Select your team:</h2>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Cowboys")}>Cowboys</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Football Team")}>Football Team</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Eagles")}>Eagles</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Giants")}>Giants</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Buccaneers")}>Buccaneers</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Saints")}>Saints</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Falcons")}>Falcons</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Panthers")}>Panthers</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Packers")}>Packers</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Bears")}>Bears</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Lions")}>Lions</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Vikings")}>Vikings</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Seahawks")}>Seahawks</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("49ers")}>49ers</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Cardinals")}>Cardinals</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Rams")}>Rams</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Patriots")}>Patriots</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Bills")}>Bills</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Dolphins")}>Dolphins</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Jets")}>Jets</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Colts")}>Colts</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Texans")}>Texans</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Jaguars")}>Jaguars</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Titans")}>Titans</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Chiefs")}>Chiefs</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Raiders")}>Raiders</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Chargers")}>Chargers</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Broncos")}>Broncos</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Steelers")}>Steelers</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Ravens")}>Ravens</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Bengals")}>Bengals</Button>
-          </Col>
-          <Col>
-            <Button className="w-100" variant="primary" onClick={() => this.props.setTeam("Browns")}>Browns</Button>
-          </Col>
-        </Row>
-        <Row className="mb-2 mx-auto w-100">
-          <Col className="d-flex justify-content-center">
-            <Button variant={this.props.team ? "success" : "secondary"} onClick={() => this.props.setScreen("draft")} disabled={!this.props.team}>Next</Button>
-          </Col>
-        </Row>
-      </Container>
-    );
+  return renderedTeams;
+}
+
+
+export default function Options (props) {
+  if (!props.nflTeams) {
+    // @todo implement loading spinner
+    return <span></span>
   }
+  return (
+    <Container>
+      <Row className="mb-2">
+        <Col md={12}>
+          <h2>Select your team:</h2>
+        </Col>
+        <TeamList teams={props.nflTeams} setUsersTeam={props.setUsersTeam}/>
+      </Row>
+      <Row className="mb-2 mx-auto w-100">
+        <Col className="d-flex justify-content-center">
+          <Button variant={props.usersTeam ? "success" : "secondary"} onClick={() => props.setScreen("draft")} disabled={!props.usersTeam}>Next</Button>
+        </Col>
+      </Row>
+    </Container>
+  )
 }
