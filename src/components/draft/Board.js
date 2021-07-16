@@ -65,7 +65,7 @@ export default function Board(props) {
   }
 
   const NameTag = (props) => {
-    if (props.isUsersTurn) {
+    if (props.isUsersTurn && props.canStartDraft) {
       return (
         <Fragment>
           <span>
@@ -90,7 +90,7 @@ export default function Board(props) {
   const renderablePlayerList = draftData.availablePlayers.map((player) =>
     <Card className="mb-2">
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
-        <NameTag player={player} isUsersTurn={draftData.usersTurn}/>
+        <NameTag player={player} isUsersTurn={draftData.usersTurn} canStartDraft={draftData.canStartDraft}/>
       </Card.Body>
     </Card>
   );

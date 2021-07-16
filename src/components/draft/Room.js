@@ -42,7 +42,7 @@ const Room = (props) => {
     }
 
     setDraftData({
-      usersTurn: false,
+      usersTurn: props.usersTeam.abbreviation === teamsInDraftOrder[0].abbreviation,
       usersTeam: props.usersTeam,
       draftOrder: teamsInDraftOrder,
       availablePlayers: sortedPlayers,
