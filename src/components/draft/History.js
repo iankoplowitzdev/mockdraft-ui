@@ -12,8 +12,8 @@ export default function History(props) {
     return(<span>No players have been selected yet.</span>)
   }
 
-  const renderableHistory = draftData.pickHistory.map((pick) =>
-    <Card className="mb-2">
+  const renderableHistory = draftData.pickHistory.map((pick, index) =>
+    <Card className="mb-2" key={`pick${pick.firstName}${pick.lastName}${index}`}>
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
         <span>{pick.team.name} - {pick.firstName} {pick.lastName}</span>
       </Card.Body>

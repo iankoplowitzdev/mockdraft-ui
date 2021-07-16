@@ -24,9 +24,12 @@ export default function Draft() {
   const [usersTeam, setUsersTeam] = useState();
   const [nflTeams, setNflTeams] = useState();
 
-  useEffect(async () => {
-    const apiTeams = await api.getTeams();
-    setNflTeams(apiTeams.data);
+  useEffect(() => {
+    const initializeNflTeams = async () => {
+      const apiTeams = await api.getTeams();
+      setNflTeams(apiTeams.data);
+    }
+    initializeNflTeams();
   }, []);
 
   return(

@@ -13,7 +13,6 @@ export default function Board(props) {
   const draftData = props.draftData;
 
   useEffect(() => {
-    console.log(draftData);
     if (!draftData || !draftData.draftOrder) {
       return;
     }
@@ -51,8 +50,7 @@ export default function Board(props) {
     draftData.pickHistory = history;
 
     const playerIndexToRemove = selectionService.findPlayerIndexInAvailablePlayers(pick._id, draftData.availablePlayers);
-    draftData.availablePlayers.splice(playerIndexToRemove, 1)
-    draftData.availablePlayers = draftData.availablePlayers;
+    draftData.availablePlayers.splice(playerIndexToRemove, 1);
   }
 
   function selectPlayer(player) {
@@ -87,8 +85,9 @@ export default function Board(props) {
     return(<span>Loading...</span>)
   }
 
-  const renderablePlayerList = draftData.availablePlayers.map((player) =>
-    <Card className="mb-2">
+  const renderablePlayerList = draftData.availablePlayers.map((player, index) =>
+    // @todo figure out better way to make unique key
+    <Card className="mb-2" key={`card${player.firstName}${player.lastName}${index}`}>
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
         <NameTag player={player} isUsersTurn={draftData.usersTurn} canStartDraft={draftData.canStartDraft}/>
       </Card.Body>

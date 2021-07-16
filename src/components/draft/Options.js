@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 function TeamList(props) {
   const renderedTeams = props.teams.map((team) => 
-    <Col className="mb-2" md={3}>
+    <Col className="mb-2" md={3} key={team.abbreviation}>
       <Button className="w-100" variant="primary" onClick={() => props.setUsersTeam(team)}>{team.name}</Button>
     </Col>
   );

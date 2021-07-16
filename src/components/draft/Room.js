@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import Board from './Board';
 import History from './History';
 import Api from '../../api/Api';
-import selectionService from '../../services/selectionService';
 import Button from 'react-bootstrap/Button';
 
 
@@ -20,37 +19,37 @@ const Room = (props) => {
     setDraftData(newDraftData);
   }
 
-  useEffect(async () => {
-    const apiPlayers = await Api.getPlayers();
-    const sortedPlayers = apiPlayers.data.sort((p1, p2) => (p1.rank > p2.rank) ? 1 : -1);
-
-    const apiPositions = await Api.getPositions();
-    const positions = apiPositions.data;
-
-    sortedPlayers.map((player) => {
-      player.selected = false;
-    })
-
-    let teamsInDraftOrder = [];
-
-    for (let i = 0; i < props.nflTeams.length; i++) {
-      const team = props.nflTeams[i];
-      const teamPicks = team.picks;
-      for (let j = 0; j < teamPicks.length; j++) {
-        teamsInDraftOrder[teamPicks[j] -1] = team;
+  useEffect(() => {
+    const initializeDraftData = async () => {
+      const apiPlayers = await Api.getPlayers();
+      const sortedPlayers = apiPlayers.data.sort((p1, p2) => (p1.rank > p2.rank) ? 1 : -1);
+  
+      const apiPositions = await Api.getPositions();
+      const positions = apiPositions.data;
+  
+      let teamsInDraftOrder = [];
+  
+      for (let i = 0; i < props.nflTeams.length; i++) {
+        const team = props.nflTeams[i];
+        const teamPicks = team.picks;
+        for (let j = 0; j < teamPicks.length; j++) {
+          teamsInDraftOrder[teamPicks[j] -1] = team;
+        }
       }
+  
+      setDraftData({
+        usersTurn: props.usersTeam.abbreviation === teamsInDraftOrder[0].abbreviation,
+        usersTeam: props.usersTeam,
+        draftOrder: teamsInDraftOrder,
+        availablePlayers: sortedPlayers,
+        pickHistory: [],
+        positions: positions,
+        canStartDraft: false,
+        isComplete: false
+      });
     }
 
-    setDraftData({
-      usersTurn: props.usersTeam.abbreviation === teamsInDraftOrder[0].abbreviation,
-      usersTeam: props.usersTeam,
-      draftOrder: teamsInDraftOrder,
-      availablePlayers: sortedPlayers,
-      pickHistory: [],
-      positions: positions,
-      canStartDraft: false,
-      isComplete: false
-    });
+    initializeDraftData();
 
   }, []);
 
