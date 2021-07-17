@@ -30,10 +30,12 @@ const Room = (props) => {
 
   return (
     <Container>
-      <Row>
+      <Row className="mb-2">
         <Col>
           <h3>Picking for: {props.draftData.usersTeam.name}</h3>
-          <Button className="ml-auto" onClick={() => { handleDraftStart(props.draftData, props.setDraftData) }}>Start drafting</Button>
+        </Col>
+        <Col className="d-flex justify-content-end">
+          <Button onClick={() => { handleDraftStart(props.draftData, props.setDraftData) }}>Start drafting</Button>
         </Col>
       </Row>
       <Row>

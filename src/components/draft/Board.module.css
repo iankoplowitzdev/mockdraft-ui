@@ -1,4 +1,4 @@
 .playerListContainer {
-  max-height: 24rem;
+  height: 24rem;
   overflow: auto;
 }

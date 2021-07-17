@@ -42,7 +42,7 @@ export default function Board(props) {
         ...draftData
       }
       props.setDraftData(newDraftData);
-    }, 100);
+    }, draftData.usersSpeed || 1000);
   });
 
   const processSelection = (player) => {
@@ -60,6 +60,13 @@ export default function Board(props) {
 
   function selectPlayer(player) {
     processSelection(player);
+
+    const hasNextPick = draftData.draftOrder.length > 0;
+    if (!hasNextPick) {
+      props.setScreen('results');
+      return;
+    }
+
     draftData.usersTurn = false;
     const newDraftData = {
       ...draftData
@@ -102,12 +109,6 @@ export default function Board(props) {
 
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
-        </Col>
-      </Row>
-    </Container>
+    <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
   )
 }

@@ -13,6 +13,14 @@ function setUsersTeam(draftData, setDraftData, team) {
   setDraftData(newDraftData);
 }
 
+function setUsersSpeed(draftData, setDraftData, speed) {
+  const newDraftData = {
+    ...draftData
+  }
+  newDraftData.usersSpeed = speed;
+  setDraftData(newDraftData);
+}
+
 function TeamList(props) {
   const renderedTeams = props.teams.map((team) => 
     <Col className="mb-2" md={3} key={team.abbreviation}>
@@ -33,9 +41,23 @@ export default function Options (props) {
     <Container>
       <Row className="mb-2">
         <Col md={12}>
-          <h2>Select your team:</h2>
+          <h4>Select your team:</h4>
         </Col>
         <TeamList teams={props.draftData.nflTeams} draftData={props.draftData} setDraftData={props.setDraftData}/>
+      </Row>
+      <Row className="mb-2">
+        <Col md={12}>
+          <h4>Select your speed (default is fast):</h4>
+        </Col>
+        <Col className="mb-2" md={4}>
+          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 5000)}>Slow</Button>
+        </Col>
+        <Col className="mb-2" md={4}>
+          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 3000)}>Medium</Button>
+        </Col>
+        <Col className="mb-2" md={4}>
+          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 1000)}>Fast</Button>
+        </Col>
       </Row>
       <Row className="mb-2 mx-auto w-100">
         <Col className="d-flex justify-content-center">

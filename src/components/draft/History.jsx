@@ -1,7 +1,6 @@
 import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import ScrollToBottom from 'react-scroll-to-bottom';
+
 import styles from './Board.module.css';
 
 
@@ -9,7 +8,13 @@ export default function History(props) {
   const draftData = props.draftData;
   
   if (!draftData || draftData.pickHistory.length === 0) {
-    return(<span>No players have been selected yet.</span>)
+    return (
+      <Card>
+        <Card.Body className={styles.playerListContainer}>
+          <span>No players have been selected yet.</span>
+        </Card.Body>
+      </Card>
+    )
   }
 
   const renderableHistory = draftData.pickHistory.map((pick, index) =>
@@ -21,13 +26,13 @@ export default function History(props) {
   );
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Card body className={styles.playerListContainer}>{renderableHistory}</Card>
-        </Col>
-      </Row>
-    </Container>
+    <Card>
+      <ScrollToBottom  className={styles.playerListContainer}>
+        <Card.Body>
+            {renderableHistory}
+        </Card.Body>
+      </ScrollToBottom>
+    </Card>
   )
   
   
