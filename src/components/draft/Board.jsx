@@ -27,9 +27,14 @@ export default function Board(props) {
 
     setTimeout(() => {
       processSelection();
-      
+
       const hasNextPick = draftData.draftOrder.length > 0;
-      if (hasNextPick && draftData.draftOrder[0].abbreviation === draftData.usersTeam.abbreviation) {
+      if (!hasNextPick) {
+        props.setScreen('results');
+        return;
+      }
+      
+      if (draftData.draftOrder[0].abbreviation === draftData.usersTeam.abbreviation) {
         draftData.usersTurn = true;
       }
   
