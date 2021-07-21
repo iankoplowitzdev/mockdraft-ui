@@ -9,7 +9,7 @@ function setUsersTeam(draftData, setDraftData, team) {
     ...draftData
   }
   newDraftData.usersTeam = team;
-  newDraftData.usersTurn = team.abbreviation === draftData.draftOrder[0].abbreviation;
+  newDraftData.isUsersTurn = team.abbreviation === draftData.draftOrder[0].abbreviation;
   setDraftData(newDraftData);
 }
 
@@ -50,13 +50,13 @@ export default function Options (props) {
           <h4>Select your speed (default is fast):</h4>
         </Col>
         <Col className="mb-2" md={4}>
-          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 5000)}>Slow</Button>
+          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 3000)}>Slow</Button>
         </Col>
         <Col className="mb-2" md={4}>
-          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 3000)}>Medium</Button>
+          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 1000)}>Medium</Button>
         </Col>
         <Col className="mb-2" md={4}>
-          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 1000)}>Fast</Button>
+          <Button className="w-100" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 100)}>Fast</Button>
         </Col>
       </Row>
       <Row className="mb-2 mx-auto w-100">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Options from './Options';
-import Room from './Room';
+import Room from './room';
 import Results from './Results';
 import Api from '../../api/Api';
 
@@ -50,14 +50,15 @@ export default function Draft() {
       }
   
       setDraftData({
-        usersTurn: false,
+        isUsersTurn: false,
         nflTeams: apiTeams.data,
         draftOrder: teamsInDraftOrder,
         availablePlayers: sortedPlayers,
         pickHistory: [],
         positions: positions,
-        canStartDraft: false,
-        isComplete: false
+        hasStarted: false,
+        isComplete: false,
+        isPaused: true
       });
     }
 
