@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 export default function Controls(props) {
   if (props.isPaused && !props.hasStarted) {
     return (
-      <Button onClick={() => { props.begin() }}>
+      <Button variant="success" onClick={() => { props.begin() }}>
         Start draft
       </Button>
     )

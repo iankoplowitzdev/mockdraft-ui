@@ -9,18 +9,30 @@ export default function Board(props) {
     if (props.isUsersTurn && props.hasStarted) {
       return (
         <Fragment>
-          <span>
-            {props.player.firstName} {props.player.lastName} | {props.player.position} | {props.player.program}
-          </span>
+          <div>
+            <div>
+              <span>{props.player.firstName} {props.player.lastName}</span>
+            </div>
+            <div>
+              <small>{props.player.position} - {props.player.program}</small>
+            </div>
+          </div>
           <Button className="ml-auto" onClick={() => props.selectPlayer(props.player)}>Draft</Button>
         </Fragment>
       )
     }
   
     return (
-      <span>
-        {props.player.firstName} {props.player.lastName} | {props.player.position} | {props.player.program}
-      </span>
+      <Fragment>
+        <div>
+          <div>
+            <span>{props.player.firstName} {props.player.lastName}</span>
+          </div>
+          <div>
+            <small>{props.player.position} - {props.player.program}</small>
+          </div>
+        </div>
+      </Fragment>
     )
   }
 
@@ -30,7 +42,7 @@ export default function Board(props) {
 
   const renderablePlayerList = props.availablePlayers.map((player, index) =>
     // @todo figure out better way to make unique key
-    <Card className="mb-2" key={`card${player.firstName}${player.lastName}${index}`}>
+    <Card className="mb-2 text-light bg-dark" key={`card${player.firstName}${player.lastName}${index}`}>
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
         <NameTag
           player={player}
@@ -44,6 +56,9 @@ export default function Board(props) {
 
 
   return (
-    <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
+    <Card>
+      <Card.Header>Draft Board</Card.Header>
+      <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
+    </Card>
   )
 }

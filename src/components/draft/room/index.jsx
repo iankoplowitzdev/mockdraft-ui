@@ -110,7 +110,7 @@ export default function Room(props) {
 
   return (
     <Container>
-      <Row className="mb-2">
+      <Row className="mb-4">
         <Col>
           <Header team={`${props.draftData.usersTeam.city} ${props.draftData.usersTeam.name}`} />
         </Col>
