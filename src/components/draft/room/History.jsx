@@ -21,7 +21,12 @@ export default function History(props) {
   const renderableHistory = draftData.pickHistory.map((pick, index) =>
     <Card className="mb-2 text-light bg-dark" key={`pick${pick.firstName}${pick.lastName}${index}`}>
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
-        <span>{pick.team.name} - {pick.firstName} {pick.lastName}</span>
+        <div>
+          {index + 1}. {pick.team.city} {pick.team.name}
+        </div>
+        <div className="ml-auto">
+          {pick.firstName} {pick.lastName}
+        </div>
       </Card.Body>
     </Card>
   );
