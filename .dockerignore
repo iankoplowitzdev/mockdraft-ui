@@ -1,0 +1,7 @@
+# Ignore everything
+**
+
+# Allow certain files/dirs
+!public/
+!src/
+!package.json

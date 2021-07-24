@@ -1,7 +1,7 @@
 const axios = require('axios');
 const url = 'http://localhost:3002/api'
 
-const api = {
+const Api = {
   getPlayers: async () => {
     const response = await axios.get(`${url}/players`);
     return response;
@@ -16,4 +16,4 @@ const api = {
   }
 }
 
-module.exports = api;
+export default Api;
