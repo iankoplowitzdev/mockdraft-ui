@@ -85,6 +85,23 @@ export default function Room(props) {
     props.setDraftData(newDraftData);
   }
 
+  const handlePositionFilter = (selectedPosition) => {
+    const newDraftData = {
+      ...props.draftData
+    }
+
+    for (let i = 0; i < newDraftData.filteredPositions.length; i++) {
+      if (newDraftData.filteredPositions[i].abbreviation == selectedPosition) {
+        newDraftData.filteredPositions[i].selected = !newDraftData.filteredPositions[i].selected;
+        break;
+      }
+    }
+
+    console.log(newDraftData.filteredPositions);
+
+    props.setDraftData(newDraftData);
+  }
+
   useEffect(() => {
     if (draftData.hasStarted && !draftData.isPaused && !draftData.isUsersTurn){
       timeout = setTimeout(() => {
@@ -129,7 +146,10 @@ export default function Room(props) {
             availablePlayers={draftData.availablePlayers}
             isUsersTurn={draftData.isUsersTurn}
             hasStarted={draftData.hasStarted}
-            selectPlayer={selectPlayer}/>
+            selectPlayer={selectPlayer}
+            positions={draftData.positions}
+            handlePositionFilter={handlePositionFilter}
+            filteredPositions={draftData.filteredPositions}/>
         </Col>
         <Col>
           <History

@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import styles from './Board.module.css';
+import Filter from './Filter';
 import { Fragment } from 'react';
 
 
@@ -40,7 +41,27 @@ export default function Board(props) {
     return(<span>Loading...</span>)
   }
 
-  const renderablePlayerList = props.availablePlayers.map((player, index) =>
+  let currentAvailablePositions = [];
+  const tempPositionList = [];
+
+  for (let i = 0; i < props.filteredPositions.length; i++){
+    const currentPosition = props.filteredPositions[i];
+    tempPositionList.push(currentPosition.abbreviation);
+    if (currentPosition.selected) {
+      currentAvailablePositions.push(currentPosition.abbreviation);
+    }
+  }
+
+  if (currentAvailablePositions.length === 0) {
+    currentAvailablePositions = tempPositionList;
+  }
+
+
+  const tempPlayerList = props.availablePlayers.filter((player) => {
+    return currentAvailablePositions.includes(player.position);
+  });
+
+  const renderablePlayerList = tempPlayerList.map((player, index) =>
     // @todo figure out better way to make unique key
     <Card className="mb-2 text-light bg-dark" key={`card${player.firstName}${player.lastName}${index}`}>
       <Card.Body className="d-flex justify-content-between align-items-center p-2">
@@ -57,7 +78,10 @@ export default function Board(props) {
 
   return (
     <Card>
-      <Card.Header>Draft Board</Card.Header>
+      <Card.Header className={styles.boardCardHeader + " d-flex justify-content-between align-items-center"}>
+        Draft Board
+        <Filter className="ml-auto" filteredPositions={props.filteredPositions} handlePositionFilter={props.handlePositionFilter}/>
+      </Card.Header>
       <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
     </Card>
   )

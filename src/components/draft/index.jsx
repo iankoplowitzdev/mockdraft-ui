@@ -58,7 +58,8 @@ export default function Draft() {
         positions: positions,
         hasStarted: false,
         isComplete: false,
-        isPaused: true
+        isPaused: true,
+        filteredPositions: [...(positions.map((position) => ({...position, selected: false})))]
       });
     }
 

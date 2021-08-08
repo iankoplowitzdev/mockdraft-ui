@@ -2,3 +2,7 @@
   height: 24rem;
   overflow: auto;
 }
+
+.boardCardHeader {
+  height: 5rem;
+}

@@ -10,7 +10,7 @@ export default function History(props) {
   if (!draftData || draftData.pickHistory.length === 0) {
     return (
       <Card>
-        <Card.Header>Selection History</Card.Header>
+        <Card.Header className={styles.boardCardHeader + " d-flex align-items-center"}>Selection History</Card.Header>
         <Card.Body className={styles.playerListContainer}>
           <span>No players have been selected yet.</span>
         </Card.Body>
@@ -33,7 +33,7 @@ export default function History(props) {
 
   return (
     <Card>
-      <Card.Header>Draft Board</Card.Header>
+      <Card.Header className={styles.boardCardHeader + " d-flex align-items-center"}>Selection History</Card.Header>
       <ScrollToBottom className={styles.playerListContainer}>
         <Card.Body>
             {renderableHistory}

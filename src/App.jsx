@@ -11,6 +11,8 @@ import Draft from './components/draft';
 import Home from './components/home';
 import About from './components/about';
 import Roadmap from './components/roadmap';
+import ChangeLog from './components/changelog';
+
 
 
 function App() {
@@ -28,12 +30,18 @@ function App() {
           <Nav>
             <Nav.Link className="ml-4" href="/roadmap">Roadmap</Nav.Link>
           </Nav>
+          <Nav>
+            <Nav.Link className="ml-4" href="/changelog">Change Log</Nav.Link>
+          </Nav>
           <Button className="ml-4 btn btn-light" href="/draft">Draft</Button>
         </Navbar.Collapse>
       </Navbar>
       <Switch>
         <Route path="/about">
           <About />
+        </Route>
+        <Route path="/changelog">
+          <ChangeLog />
         </Route>
         <Route path="/roadmap">
           <Roadmap />
