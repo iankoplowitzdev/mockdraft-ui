@@ -18,7 +18,7 @@ import ChangeLog from './components/changelog';
 function App() {
   return (
     <Router>
-      <Navbar className="mb-4" bg="dark" variant="dark">
+      <Navbar className="mb-4" bg="light" variant="light">
         <Navbar.Brand href="/">
           NFL Mock Draft Simulator
         </Navbar.Brand>
@@ -33,7 +33,7 @@ function App() {
           <Nav>
             <Nav.Link className="ml-4" href="/changelog">Change Log</Nav.Link>
           </Nav>
-          <Button className="ml-4 btn btn-light" href="/draft">Draft</Button>
+          <Button className="ml-4 btn btn-dark" href="/draft">Draft</Button>
         </Navbar.Collapse>
       </Navbar>
       <Switch>

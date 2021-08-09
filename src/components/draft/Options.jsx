@@ -57,7 +57,7 @@ function SpeedList(props) {
   const renderedSpeeds = speeds.map((speedObj) => 
     <Col className="mb-2" md={4}>
       <Button
-        className={`w-100 btn btn-${props.draftData.usersSpeed == speedObj.speed ? 'primary' : 'dark'}`}
+        className={`w-100 btn btn-${props.draftData.usersSpeed == speedObj.speed ? 'success' : 'light'}`}
         onClick={() => setUsersSpeed(props.draftData, props.setDraftData, speedObj.speed)}>{speedObj.description}</Button>
     </Col>
   );
@@ -69,7 +69,7 @@ function TeamList(props) {
   const renderedTeams = props.teams.map((team) => 
     <Col className="mb-2" md={3} key={team.abbreviation}>
       <Button
-        className={`w-100 btn btn-${props.draftData.usersTeam?.name == team.name ? 'primary' : 'dark'}`}
+        className={`w-100 btn btn-${props.draftData.usersTeam?.name == team.name ? 'success' : 'light'}`}
         onClick={() => setUsersTeam(props.draftData, props.setDraftData, team)}>{team.name}</Button>
     </Col>
   );
@@ -84,7 +84,7 @@ function RoundList(props) {
     renderedRounds.push(
       <Col className="mb-2" key={`round${i}`}>
         <Button
-          className={`w-100 btn btn-${props.draftData.selectedNumRounds == i ? 'primary' : 'dark'}`}
+          className={`w-100 btn btn-${props.draftData.selectedNumRounds == i ? 'success' : 'light'}`}
           onClick={() => setDraftOrder(props.draftData, props.setDraftData, i)}>{i}</Button>
       </Col>
     )
@@ -104,19 +104,19 @@ export default function Options (props) {
     <Container>
       <Row className="mb-2">
         <Col md={12}>
-          <h4>Select your team:</h4>
+          <h4 className="text-light">Select your team:</h4>
         </Col>
         <TeamList teams={props.draftData.nflTeams} draftData={props.draftData} setDraftData={props.setDraftData}/>
       </Row>
       <Row className="mb-2">
         <Col md={12}>
-          <h4>Select your speed:</h4>
+          <h4 className="text-light">Select your speed:</h4>
         </Col>
         <SpeedList draftData={props.draftData} setDraftData={props.setDraftData} />
       </Row>
       <Row className="mb-2">
         <Col md={12}>
-          <h4>Rounds to simulate:</h4>
+          <h4 className="text-light">Rounds to simulate:</h4>
         </Col>
         <RoundList draftData={props.draftData} setDraftData={props.setDraftData}/>
       </Row>

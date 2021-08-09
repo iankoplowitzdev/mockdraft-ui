@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import Board from './Board';
+import Trades from './Trades';
 import History from './History';
 import Controls from './Controls';
 import Header from './Header';
@@ -86,7 +87,11 @@ export default function Room(props) {
   }
 
   const handlePositionFilter = (selectedPosition) => {
+    // clear the timeout to prevent additional renders considering
+    // a new render cycle will begin from the state getting set at
+    // the end of this function.
     clearTimeout(timeout);
+
     const newDraftData = {
       ...props.draftData
     }
@@ -154,6 +159,11 @@ export default function Room(props) {
           <History
             draftData={props.draftData}
             setDraftData={props.setDraftData}/>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Trades />
         </Col>
       </Row>
     </Container>

@@ -1,6 +1,6 @@
 
 export default function Header(props) {
   return (
-    <h3>Picking for: The {props.team}</h3>
+    <h3 className="text-light">Picking for: The {props.team}</h3>
   )
 }

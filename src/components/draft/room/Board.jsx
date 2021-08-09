@@ -79,7 +79,7 @@ export default function Board(props) {
   return (
     <Card>
       <Card.Header className={styles.boardCardHeader + " d-flex justify-content-between align-items-center"}>
-        Draft Board
+        <span className="font-weight-bolder">Draft Board</span>
         <Filter className="ml-auto" filteredPositions={props.filteredPositions} handlePositionFilter={props.handlePositionFilter}/>
       </Card.Header>
       <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
