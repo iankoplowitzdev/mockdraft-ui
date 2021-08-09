@@ -86,6 +86,7 @@ export default function Room(props) {
   }
 
   const handlePositionFilter = (selectedPosition) => {
+    clearTimeout(timeout);
     const newDraftData = {
       ...props.draftData
     }
