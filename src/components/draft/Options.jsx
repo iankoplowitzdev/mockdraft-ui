@@ -9,7 +9,7 @@ function setUsersTeam(draftData, setDraftData, team) {
     ...draftData
   }
   newDraftData.usersTeam = team;
-  newDraftData.isUsersTurn = team.abbreviation === draftData.draftOrder[0].abbreviation;
+  newDraftData.isUsersTurn = team.abbreviation === draftData.retrievedDraftOrder.r1[0].abbreviation;
   setDraftData(newDraftData);
 }
 
@@ -21,18 +21,81 @@ function setUsersSpeed(draftData, setDraftData, speed) {
   setDraftData(newDraftData);
 }
 
+function setDraftOrder(draftData, setDraftData, numRounds) {
+  const newDraftData = {
+    ...draftData
+  }
+
+  delete newDraftData.draftOrder;
+  newDraftData.draftOrder = [];
+
+  for (let i = 1; i <= numRounds; i++) {
+    newDraftData.draftOrder.push(...draftData.retrievedDraftOrder[`r${i}`]);
+  }
+
+  newDraftData.hasSelectedNumRounds = true;
+  newDraftData.selectedNumRounds = numRounds;
+  setDraftData(newDraftData);
+}
+
+function SpeedList(props) {
+  const speeds = [
+    { 
+      description: 'Slow',
+      speed: 3000
+    },
+    { 
+      description: 'Medium',
+      speed: 1000
+    },
+    { 
+      description: 'Fast',
+      speed: 100
+    }
+  ];
+  
+  const renderedSpeeds = speeds.map((speedObj) => 
+    <Col className="mb-2" md={4}>
+      <Button
+        className={`w-100 btn btn-${props.draftData.usersSpeed == speedObj.speed ? 'primary' : 'dark'}`}
+        onClick={() => setUsersSpeed(props.draftData, props.setDraftData, speedObj.speed)}>{speedObj.description}</Button>
+    </Col>
+  );
+
+  return renderedSpeeds;
+}
+
 function TeamList(props) {
   const renderedTeams = props.teams.map((team) => 
     <Col className="mb-2" md={3} key={team.abbreviation}>
-      <Button className="w-100 btn btn-dark" variant="primary" onClick={() => setUsersTeam(props.draftData, props.setDraftData, team)}>{team.name}</Button>
+      <Button
+        className={`w-100 btn btn-${props.draftData.usersTeam?.name == team.name ? 'primary' : 'dark'}`}
+        onClick={() => setUsersTeam(props.draftData, props.setDraftData, team)}>{team.name}</Button>
     </Col>
   );
 
   return renderedTeams;
 }
 
+function RoundList(props) {
+  const renderedRounds = [];
+
+  for (let i = 1; i <= 7; i++) {
+    renderedRounds.push(
+      <Col className="mb-2" key={`round${i}`}>
+        <Button
+          className={`w-100 btn btn-${props.draftData.selectedNumRounds == i ? 'primary' : 'dark'}`}
+          onClick={() => setDraftOrder(props.draftData, props.setDraftData, i)}>{i}</Button>
+      </Col>
+    )
+  }
+
+  return renderedRounds;
+}
+
 
 export default function Options (props) {
+  const canGoToNextScreen = !props.draftData.usersTeam || !props.draftData.hasSelectedNumRounds || !props.draftData.usersSpeed;
   if (!props.draftData.nflTeams || !props.draftData.draftOrder) {
     // @todo implement loading spinner
     return <span></span>
@@ -47,24 +110,21 @@ export default function Options (props) {
       </Row>
       <Row className="mb-2">
         <Col md={12}>
-          <h4>Select your speed (default is fast):</h4>
+          <h4>Select your speed:</h4>
         </Col>
-        <Col className="mb-2" md={4}>
-          <Button className="w-100 btn btn-dark" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 3000)}>Slow</Button>
+        <SpeedList draftData={props.draftData} setDraftData={props.setDraftData} />
+      </Row>
+      <Row className="mb-2">
+        <Col md={12}>
+          <h4>Rounds to simulate:</h4>
         </Col>
-        <Col className="mb-2" md={4}>
-          <Button className="w-100 btn btn-dark" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 1000)}>Medium</Button>
-        </Col>
-        <Col className="mb-2" md={4}>
-          <Button className="w-100 btn btn-dark" variant="primary" onClick={() => setUsersSpeed(props.draftData, props.setDraftData, 100)}>Fast</Button>
-        </Col>
+        <RoundList draftData={props.draftData} setDraftData={props.setDraftData}/>
       </Row>
       <Row className="mb-2 mx-auto w-100">
         <Col className="d-flex justify-content-center">
           <Button
-            variant={props.draftData.usersTeam ? "success" : "secondary"}
             onClick={() => props.setScreen("draft")}
-            disabled={!props.draftData.usersTeam}>
+            disabled={canGoToNextScreen}>
               Next
           </Button>
         </Col>

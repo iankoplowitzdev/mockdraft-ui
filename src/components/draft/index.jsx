@@ -33,33 +33,24 @@ export default function Draft() {
     const initializeDraftData = async () => {
       const apiPlayers = await Api.getPlayers();
       const sortedPlayers = apiPlayers.data.sort((p1, p2) => (p1.rank > p2.rank) ? 1 : -1);
-  
       const apiPositions = await Api.getPositions();
       const positions = apiPositions.data;
-
       const apiTeams = await Api.getTeams();
-  
-      let teamsInDraftOrder = [];
-  
-      for (let i = 0; i < apiTeams.data.length; i++) {
-        const team = apiTeams.data[i];
-        const teamPicks = team.picks;
-        for (let j = 0; j < teamPicks.length; j++) {
-          teamsInDraftOrder[teamPicks[j] -1] = team;
-        }
-      }
+      const retrievedDraftOrder = (await Api.getCurrentYearDraftOrder()).data;
   
       setDraftData({
         isUsersTurn: false,
         nflTeams: apiTeams.data,
-        draftOrder: teamsInDraftOrder,
+        retrievedDraftOrder: retrievedDraftOrder,
+        draftOrder: [...retrievedDraftOrder.r1],
         availablePlayers: sortedPlayers,
         pickHistory: [],
         positions: positions,
         hasStarted: false,
         isComplete: false,
         isPaused: true,
-        filteredPositions: [...(positions.map((position) => ({...position, selected: false})))]
+        filteredPositions: [...(positions.map((position) => ({...position, selected: false})))],
+        hasSelectedNumRounds: false
       });
     }
 

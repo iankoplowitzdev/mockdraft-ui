@@ -13,6 +13,14 @@ const Api = {
   getPositions: async () => {
     const response = await axios.get(`${url}/positions`);
     return response;
+  },
+  getDraftOrder: async () => {
+    const response = await axios.get(`${url}/draft-order`);
+    return response;
+  },
+  getCurrentYearDraftOrder: async () => {
+    const response = await axios.get(`${url}/draft-order/current`);
+    return response;
   }
 }
 

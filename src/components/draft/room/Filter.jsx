@@ -3,7 +3,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 function assembleFilter(positions, handlePositionFilter) {
   const renderablePositions = [];
-  console.log(positions);
 
   for (let i = 0; i < positions.length; i++) {
     if (positions[i].selected) {
@@ -13,7 +12,7 @@ function assembleFilter(positions, handlePositionFilter) {
     }
     else {
       renderablePositions.push(
-        <Dropdown.Item onClick={() => {handlePositionFilter(positions[i].abbreviation)}}>{positions[i].abbreviation}</Dropdown.Item>
+        <Dropdown.Item key={`position-filter-${positions[i].abbreviation}`} onClick={() => {handlePositionFilter(positions[i].abbreviation)}}>{positions[i].abbreviation}</Dropdown.Item>
       )
     }
 

@@ -97,8 +97,6 @@ export default function Room(props) {
       }
     }
 
-    console.log(newDraftData.filteredPositions);
-
     props.setDraftData(newDraftData);
   }
 
