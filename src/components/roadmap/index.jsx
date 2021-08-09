@@ -16,7 +16,7 @@ export default function Roadmap() {
               <Card.Title>Roadmap to upcoming features (in current prioritized order):</Card.Title>
               <ListGroup variant="flush">
                 <ListGroup.Item><strike>Filtering for draft board to filter by position.</strike></ListGroup.Item>
-                <ListGroup.Item>Ability to choose the maximum round you want to draft through.</ListGroup.Item>
+                <ListGroup.Item><strike>Ability to choose the maximum round you want to draft through.</strike></ListGroup.Item>
                 <ListGroup.Item>Trades based on the Jimmy Johnson NFL trade chart.</ListGroup.Item>
                 <ListGroup.Item>Customizable draft rankings to run mock draft by.</ListGroup.Item>
                 <ListGroup.Item>Customizable sliders to allow user the ability to tune the "needs" weight of each position for each team.</ListGroup.Item>
