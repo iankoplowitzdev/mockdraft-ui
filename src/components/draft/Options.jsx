@@ -9,7 +9,7 @@ function setUsersTeam(draftData, setDraftData, team) {
     ...draftData
   }
   newDraftData.usersTeam = team;
-  newDraftData.isUsersTurn = team.abbreviation === draftData.retrievedDraftOrder.r1[0].abbreviation;
+  newDraftData.isUsersTurn = team.abbreviation === draftData.fullDraftOrder[0].abbreviation;
   setDraftData(newDraftData);
 }
 
@@ -27,11 +27,14 @@ function setDraftOrder(draftData, setDraftData, numRounds) {
   }
 
   delete newDraftData.draftOrder;
-  newDraftData.draftOrder = [];
 
-  for (let i = 1; i <= numRounds; i++) {
-    newDraftData.draftOrder.push(...draftData.retrievedDraftOrder[`r${i}`]);
+  let numSelections = 0;
+
+  for (let i = 0; i < numRounds; i++) {
+    numSelections += draftData.numSelections[i];
   }
+
+  newDraftData.draftOrder = draftData.fullDraftOrder.slice(0, numSelections);
 
   newDraftData.hasSelectedNumRounds = true;
   newDraftData.selectedNumRounds = numRounds;
@@ -55,7 +58,7 @@ function SpeedList(props) {
   ];
   
   const renderedSpeeds = speeds.map((speedObj) => 
-    <Col className="mb-2" md={4}>
+    <Col className="mb-2" md={4} key={`speed-${speedObj.speed}`}>
       <Button
         className={`w-100 btn btn-${props.draftData.usersSpeed == speedObj.speed ? 'success' : 'light'}`}
         onClick={() => setUsersSpeed(props.draftData, props.setDraftData, speedObj.speed)}>{speedObj.description}</Button>
@@ -96,7 +99,7 @@ function RoundList(props) {
 
 export default function Options (props) {
   const canGoToNextScreen = !props.draftData.usersTeam || !props.draftData.hasSelectedNumRounds || !props.draftData.usersSpeed;
-  if (!props.draftData.nflTeams || !props.draftData.draftOrder) {
+  if (!props.draftData.nflTeams || !props.draftData.fullDraftOrder) {
     // @todo implement loading spinner
     return <span></span>
   }

@@ -44,6 +44,7 @@ export default function Room(props) {
     pick.team = currentTeamSelecting;
     history.push(pick);
     draftData.draftOrder = draftData.draftOrder.slice(1);
+    draftData.fullDraftOrder = draftData.fullDraftOrder.slice(1);
     draftData.pickHistory = history;
 
     const playerIndexToRemove = selectionService.findPlayerIndexInAvailablePlayers(pick._id, draftData.availablePlayers);
@@ -163,7 +164,9 @@ export default function Room(props) {
       </Row>
       <Row>
         <Col>
-          <Trades />
+          <Trades
+            fullDraftOrder={draftData.fullDraftOrder}
+            usersTeam={draftData.usersTeam}/>
         </Col>
       </Row>
     </Container>

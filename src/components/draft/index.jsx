@@ -30,26 +30,21 @@ export default function Draft() {
   const [draftData, setDraftData] = useState({});
 
   useEffect(() => {
-    const initializeDraftData = async () => {
-      const apiPlayers = await Api.getPlayers();
-      const sortedPlayers = apiPlayers.data.sort((p1, p2) => (p1.rank > p2.rank) ? 1 : -1);
-      const apiPositions = await Api.getPositions();
-      const positions = apiPositions.data;
-      const apiTeams = await Api.getTeams();
-      const retrievedDraftOrder = (await Api.getCurrentYearDraftOrder()).data;
-  
+    const initializeDraftData = async () => {      
+      const mockDraftData = (await Api.getInitialMockDraftData()).data;
+      
       setDraftData({
         isUsersTurn: false,
-        nflTeams: apiTeams.data,
-        retrievedDraftOrder: retrievedDraftOrder,
-        draftOrder: [...retrievedDraftOrder.r1],
-        availablePlayers: sortedPlayers,
+        nflTeams: mockDraftData.teams,
+        fullDraftOrder: [...mockDraftData.draftOrder],
+        numSelections: mockDraftData.numSelections,
+        availablePlayers: mockDraftData.players,
         pickHistory: [],
-        positions: positions,
+        positions: mockDraftData.positions,
         hasStarted: false,
         isComplete: false,
         isPaused: true,
-        filteredPositions: [...(positions.map((position) => ({...position, selected: false})))],
+        filteredPositions: [...(mockDraftData.positions.map((position) => ({...position, selected: false})))],
         hasSelectedNumRounds: false
       });
     }

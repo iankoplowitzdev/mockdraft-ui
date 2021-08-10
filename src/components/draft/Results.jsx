@@ -29,12 +29,12 @@ const Results = (props) => {
     <Container>
       <Row>
         <Col>
-          <h2>The results for your {props.draftData.usersTeam.city} {props.draftData.usersTeam.name} draft:</h2>
+          <h2 className="text-light">The results for your {props.draftData.usersTeam.city} {props.draftData.usersTeam.name} draft:</h2>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Table>
+          <Table className="text-light">
             <thead>
               <tr>
                 <th>Player</th>

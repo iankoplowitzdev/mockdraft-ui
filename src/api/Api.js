@@ -14,12 +14,24 @@ const Api = {
     const response = await axios.get(`${url}/positions`);
     return response;
   },
-  getDraftOrder: async () => {
-    const response = await axios.get(`${url}/draft-order`);
+  getDraftOrders: async () => {
+    const response = await axios.get(`${url}/draft-orders`);
     return response;
   },
   getCurrentYearDraftOrder: async () => {
-    const response = await axios.get(`${url}/draft-order/current`);
+    const response = await axios.get(`${url}/draft-orders/current`);
+    return response;
+  },
+  getTradeCharts: async () => {
+    const response = await axios.get(`${url}/trade-charts/current`);
+    return response;
+  },
+  getCurrentYearTradeChart: async () => {
+    const response = await axios.get(`${url}/trade-charts/current`);
+    return response;
+  },
+  getInitialMockDraftData: async () => {
+    const response = await axios.get(`${url}/mock-draft`);
     return response;
   }
 }
