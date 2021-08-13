@@ -38,7 +38,7 @@ export default function Room(props) {
   }
 
   const processSelection = (player) => {
-    const currentTeamSelecting = draftData.draftOrder[0];
+    const currentTeamSelecting = draftData.draftOrder[0].team;
     const pick = player || selectionService.makeSelection(currentTeamSelecting, draftData.availablePlayers, draftData.positions);;
     const history = draftData.pickHistory;
     pick.team = currentTeamSelecting;
@@ -107,6 +107,66 @@ export default function Room(props) {
     props.setDraftData(newDraftData);
   }
 
+  const handleTrade = (usersPicks, otherTeamsPicks) => {
+    const arraysContainPicks = usersPicks.length > 0 && otherTeamsPicks.length > 0;
+    let userPicksValue = 0;
+    let otherTeamPicksValue = 0;
+    const usersTeam = usersPicks[0].team;
+    const otherTeam = otherTeamsPicks[0].team;
+
+    for (let i = 0; i < usersPicks.length; i++) {
+      userPicksValue += usersPicks[i].tradeChartValue;
+    }
+
+    for (let i = 0; i < otherTeamsPicks.length; i++) {
+      otherTeamPicksValue += otherTeamsPicks[i].tradeChartValue;
+    }
+
+    const isAcceptedTrade = arraysContainPicks && (userPicksValue > otherTeamPicksValue);
+
+    const tempDraftOrder = props.draftData.fullDraftOrder;
+    
+    if (!isAcceptedTrade) {
+      // @todo update this with alert
+      console.log("Trade not accepted.");
+      return;
+    }
+
+    const newDraftData = {
+      ...props.draftData
+    }
+
+    for (let i = 0; i < tempDraftOrder.length; i++) {
+      const currentPick = tempDraftOrder[i];
+
+      if (usersPicks.includes(currentPick)) {
+        currentPick.team = otherTeam;
+      }
+      else if (otherTeamsPicks.includes(currentPick)) {
+        currentPick.team = usersTeam;
+      }
+    }
+
+    if (tempDraftOrder[0].team.name === props.draftData.usersTeam.name) {
+      newDraftData.isUsersTurn = true;
+    }
+
+    props.setDraftData(newDraftData);
+  }
+
+  const TradesDisplay = () => {
+    if (props.draftData.isUsersTurn || !props.draftData.isPaused) {
+      return <span></span>
+    }
+
+    return (
+      <Trades
+        fullDraftOrder={draftData.fullDraftOrder}
+        usersTeam={draftData.usersTeam}
+        handleTrade={handleTrade}/>
+    )
+  }
+
   useEffect(() => {
     if (draftData.hasStarted && !draftData.isPaused && !draftData.isUsersTurn){
       timeout = setTimeout(() => {
@@ -118,7 +178,7 @@ export default function Room(props) {
           return;
         }
         
-        if (draftData.draftOrder[0].abbreviation === draftData.usersTeam.abbreviation) {
+        if (draftData.draftOrder[0].team.abbreviation === draftData.usersTeam.abbreviation) {
           draftData.isUsersTurn = true;
         }
     
@@ -164,9 +224,7 @@ export default function Room(props) {
       </Row>
       <Row>
         <Col>
-          <Trades
-            fullDraftOrder={draftData.fullDraftOrder}
-            usersTeam={draftData.usersTeam}/>
+          <TradesDisplay />
         </Col>
       </Row>
     </Container>

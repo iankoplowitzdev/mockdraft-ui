@@ -9,7 +9,7 @@ function setUsersTeam(draftData, setDraftData, team) {
     ...draftData
   }
   newDraftData.usersTeam = team;
-  newDraftData.isUsersTurn = team.abbreviation === draftData.fullDraftOrder[0].abbreviation;
+  newDraftData.isUsersTurn = team.abbreviation === draftData.fullDraftOrder[0].team.abbreviation;
   setDraftData(newDraftData);
 }
 
