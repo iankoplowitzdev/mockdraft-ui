@@ -58,11 +58,11 @@ function SpeedList(props) {
   ];
   
   const renderedSpeeds = speeds.map((speedObj) => 
-    <Col className="mb-2" md={4} key={`speed-${speedObj.speed}`}>
-      <Button
-        className={`w-100 btn btn-${props.draftData.usersSpeed == speedObj.speed ? 'success' : 'light'}`}
-        onClick={() => setUsersSpeed(props.draftData, props.setDraftData, speedObj.speed)}>{speedObj.description}</Button>
-    </Col>
+    <div className="uk-width-1-3@m">
+      <button
+        className={`uk-button uk-button-${props.draftData.usersSpeed == speedObj.speed ? 'primary' : 'default'} uk-width-1-1`}
+        onClick={() => setUsersSpeed(props.draftData, props.setDraftData, speedObj.speed)}>{speedObj.description}</button>
+    </div>
   );
 
   return renderedSpeeds;
@@ -70,11 +70,11 @@ function SpeedList(props) {
 
 function TeamList(props) {
   const renderedTeams = props.teams.map((team) => 
-    <Col className="mb-2" md={3} key={team.abbreviation}>
-      <Button
-        className={`w-100 btn btn-${props.draftData.usersTeam?.name == team.name ? 'success' : 'light'}`}
-        onClick={() => setUsersTeam(props.draftData, props.setDraftData, team)}>{team.name}</Button>
-    </Col>
+    <div className="uk-width-1-4@m">
+      <button
+        className={`uk-button uk-button-${props.draftData.usersTeam?.name == team.name ? 'primary' : 'default'} uk-width-1-1 uk-margin-bottom`}
+        onClick={() => setUsersTeam(props.draftData, props.setDraftData, team)}>{team.name}</button>
+    </div>
   );
 
   return renderedTeams;
@@ -85,11 +85,11 @@ function RoundList(props) {
 
   for (let i = 1; i <= 7; i++) {
     renderedRounds.push(
-      <Col className="mb-2" key={`round${i}`}>
-        <Button
-          className={`w-100 btn btn-${props.draftData.selectedNumRounds == i ? 'success' : 'light'}`}
-          onClick={() => setDraftOrder(props.draftData, props.setDraftData, i)}>{i}</Button>
-      </Col>
+      <div className="uk-width-1-4@m">
+        <button
+          className={`uk-button uk-button-${props.draftData.selectedNumRounds == i ? 'primary' : 'default'} uk-width-1-1 uk-margin-bottom`}
+          onClick={() => setDraftOrder(props.draftData, props.setDraftData, i)}>{i}</button>
+      </div>
     )
   }
 
@@ -104,34 +104,34 @@ export default function Options (props) {
     return <span></span>
   }
   return (
-    <Container>
-      <Row className="mb-2">
-        <Col md={12}>
-          <h4 className="text-light">Select your team:</h4>
-        </Col>
-        <TeamList teams={props.draftData.nflTeams} draftData={props.draftData} setDraftData={props.setDraftData}/>
-      </Row>
-      <Row className="mb-2">
-        <Col md={12}>
-          <h4 className="text-light">Select your speed:</h4>
-        </Col>
-        <SpeedList draftData={props.draftData} setDraftData={props.setDraftData} />
-      </Row>
-      <Row className="mb-2">
-        <Col md={12}>
-          <h4 className="text-light">Rounds to simulate:</h4>
-        </Col>
-        <RoundList draftData={props.draftData} setDraftData={props.setDraftData}/>
-      </Row>
-      <Row className="mb-2 mx-auto w-100">
-        <Col className="d-flex justify-content-center">
-          <Button
-            onClick={() => props.setScreen("draft")}
-            disabled={canGoToNextScreen}>
-              Next
-          </Button>
-        </Col>
-      </Row>
-    </Container>
+    <div className="uk-container">
+      <div class="uk-card uk-card-secondary uk-card-body uk-margin-bottom">
+          <h3 class="uk-card-title">Select your team:</h3>
+          <div className="uk-grid uk-child-width-expand">
+            <TeamList teams={props.draftData.nflTeams} draftData={props.draftData} setDraftData={props.setDraftData}/>
+          </div>
+      </div>
+      <div class="uk-card uk-card-secondary uk-card-body uk-margin-bottom">
+          <h3 class="uk-card-title">Select your speed:</h3>
+          <div className="uk-grid">
+            <SpeedList draftData={props.draftData} setDraftData={props.setDraftData}/>
+          </div>
+      </div>
+      <div class="uk-card uk-card-secondary uk-card-body uk-margin-bottom">
+          <h3 class="uk-card-title">Rounds to simulate:</h3>
+          <div className="uk-grid">
+            <RoundList draftData={props.draftData} setDraftData={props.setDraftData}/>
+          </div>
+      </div>
+      <div className="uk-margin-bottom">
+        <button 
+          className="uk-button uk-button-secondary uk-margin-auto"
+          onClick={() => props.setScreen("draft")}
+          disabled={canGoToNextScreen}>
+            Next
+          </button>
+      </div>
+    </div>
+
   )
 }

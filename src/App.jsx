@@ -1,7 +1,4 @@
 import React from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Button from 'react-bootstrap/Button';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,24 +15,23 @@ import ChangeLog from './components/changelog';
 function App() {
   return (
     <Router>
-      <Navbar className="mb-4" bg="light" variant="light">
-        <Navbar.Brand href="/">
-          NFL Mock Draft Simulator
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto">
-            <Nav.Link href="/about">About</Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav.Link className="ml-4" href="/roadmap">Roadmap</Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav.Link className="ml-4" href="/changelog">Change Log</Nav.Link>
-          </Nav>
-          <Button className="ml-4 btn btn-dark" href="/draft">Draft</Button>
-        </Navbar.Collapse>
-      </Navbar>
+      <nav className="uk-navbar-container uk-margin-bottom" data-uk-navbar>
+        <div className="uk-navbar-left">
+          <a className="uk-navbar-item uk-logo" href="/">NFL Mock Draft Simulator</a>
+        </div>
+        <div className="uk-navbar-right">
+          <ul className="uk-navbar-nav">
+            <li><a href="/about">About</a></li>
+            <li><a href="/roadmap">Roadmap</a></li>
+            <li><a href="/changelog">Changelog</a></li>
+            <li>
+              <a href="/draft">
+                <button className="uk-button uk-button-primary">Draft</button>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
       <Switch>
         <Route path="/about">
           <About />
@@ -58,3 +54,4 @@ function App() {
 }
 
 export default App;
+

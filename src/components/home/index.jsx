@@ -6,17 +6,10 @@ import Col from 'react-bootstrap/Col';
 
 export default function Home() {
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Jumbotron>
-            <h1>Hi there!</h1>
-            <p>
-              Welcome to my mock draft simulator project!
-            </p>
-          </Jumbotron>
-        </Col>
-      </Row>
-    </Container>
+    <div class="uk-container">
+      <div class="uk-card uk-card-secondary uk-card-body">
+          <h3 class="uk-card-title">Welcome to my mock draft simulator project!</h3>
+      </div>      
+    </div>
   )
 }
