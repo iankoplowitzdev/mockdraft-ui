@@ -1,5 +1,3 @@
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import styles from './Board.module.css';
 import Filter from './Filter';
 import { Fragment } from 'react';
@@ -9,8 +7,8 @@ export default function Board(props) {
   const NameTag = (props) => {
     if (props.isUsersTurn && props.hasStarted) {
       return (
-        <Fragment>
-          <div>
+        <div className="uk-grid">
+          <div className="uk-width-1-2">
             <div>
               <span>{props.player.firstName} {props.player.lastName}</span>
             </div>
@@ -18,8 +16,12 @@ export default function Board(props) {
               <small>{props.player.position} - {props.player.program}</small>
             </div>
           </div>
-          <Button className="ml-auto" onClick={() => props.selectPlayer(props.player)}>Draft</Button>
-        </Fragment>
+          <div className="uk-width-1-2">
+            <div className="uk-button uk-button-primary uk-align-right" onClick={() => props.selectPlayer(props.player)}>
+              Draft
+            </div>
+          </div>
+        </div>
       )
     }
   
@@ -63,26 +65,36 @@ export default function Board(props) {
 
   const renderablePlayerList = tempPlayerList.map((player, index) =>
     // @todo figure out better way to make unique key
-    <Card className="mb-2 text-light bg-dark" key={`card${player.firstName}${player.lastName}${index}`}>
-      <Card.Body className="d-flex justify-content-between align-items-center p-2">
-        <NameTag
-          player={player}
-          isUsersTurn={props.isUsersTurn}
-          hasStarted={props.hasStarted}
-          selectPlayer={props.selectPlayer}/>
-      </Card.Body>
-    </Card>
+    <div className="uk-card uk-card-default uk-card-small uk-card-body uk-margin-bottom">
+      <NameTag
+        player={player}
+        isUsersTurn={props.isUsersTurn}
+        hasStarted={props.hasStarted}
+        selectPlayer={props.selectPlayer}/>
+    </div>
   );
 
 
 
   return (
-    <Card>
-      <Card.Header className={styles.boardCardHeader + " d-flex justify-content-between align-items-center"}>
-        <span className="font-weight-bolder">Draft Board</span>
-        <Filter className="ml-auto" filteredPositions={props.filteredPositions} handlePositionFilter={props.handlePositionFilter}/>
-      </Card.Header>
-      <Card body className={styles.playerListContainer}>{renderablePlayerList}</Card>
-    </Card>
+    <div class="uk-card uk-card-small uk-card-secondary uk-card-body">
+      <div class="uk-card-header">
+        <div className="uk-grid">
+          <div className="uk-width-1-2">
+            <h3 className="uk-card-title">Draft Board</h3>
+          </div>
+          <div className="uk-width-1-2">
+            <div className="uk-align-right">
+              <Filter className="uk-align-right" filteredPositions={props.filteredPositions} handlePositionFilter={props.handlePositionFilter}/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="uk-card-body">
+        <div className={`${styles.playerListContainer} uk-card uk-padding-small`}>
+          {renderablePlayerList}
+        </div>
+      </div>
+    </div>
   )
 }

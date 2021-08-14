@@ -191,22 +191,20 @@ export default function Room(props) {
   });
 
   return (
-    <Container>
-      <Row className="mb-4">
-        <Col>
+    <div className="uk-container">
+      <div className="uk-grid">
+        <div className="uk-width-1-2">
           <Header team={`${props.draftData.usersTeam.city} ${props.draftData.usersTeam.name}`} />
-        </Col>
-        <Col className="d-flex justify-content-end">
+        </div>
+        <div className="uk-width-1-2">
           <Controls
-            play={handleDraftPlay}
-            pause={handleDraftPause}
-            begin={handleDraftBegin}
-            hasStarted={props.draftData.hasStarted}
-            isPaused={props.draftData.isPaused}/>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+              play={handleDraftPlay}
+              pause={handleDraftPause}
+              begin={handleDraftBegin}
+              hasStarted={props.draftData.hasStarted}
+              isPaused={props.draftData.isPaused}/> 
+        </div>
+        <div className="uk-width-1-2">
           <Board
             availablePlayers={draftData.availablePlayers}
             isUsersTurn={draftData.isUsersTurn}
@@ -215,18 +213,14 @@ export default function Room(props) {
             positions={draftData.positions}
             handlePositionFilter={handlePositionFilter}
             filteredPositions={draftData.filteredPositions}/>
-        </Col>
-        <Col>
+        </div>
+        <div className="uk-width-1-2">
           <History
             draftData={props.draftData}
             setDraftData={props.setDraftData}/>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <TradesDisplay />
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
+    
   )
 }

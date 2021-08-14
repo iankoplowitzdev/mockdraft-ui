@@ -3,21 +3,21 @@ import Button from 'react-bootstrap/Button';
 export default function Controls(props) {
   if (props.isPaused && !props.hasStarted) {
     return (
-      <Button variant="success" onClick={() => { props.begin() }}>
+      <button className="uk-button uk-button-primary uk-align-right" variant="success" onClick={() => { props.begin() }}>
         Start draft
-      </Button>
+      </button>
     )
   }
   else if (props.isPaused && props.hasStarted){
     return (
-      <Button onClick={() => { props.play() }}>
+      <button className="uk-button uk-button-primary uk-align-right" onClick={() => { props.play() }}>
         Resume
-      </Button>
+      </button>
     )
   }
   return(
-    <Button onClick={() => { props.pause() }}>
+    <button className="uk-button uk-button-primary uk-align-right" onClick={() => { props.pause() }}>
       Pause
-    </Button>
+    </button>
   );
 }

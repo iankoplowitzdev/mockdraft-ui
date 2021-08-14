@@ -34,17 +34,17 @@ export default function History(props) {
   );
 
   return (
-    <Card>
-      <Card.Header className={styles.boardCardHeader + " d-flex align-items-center"}>
-        <span className="font-weight-bolder">Selection History</span>
-      </Card.Header>
+    <div class="uk-card uk-card-small uk-card-secondary uk-card-body">
+      <div class="uk-card-header">
+        <h3 className="uk-card-title">Selection History</h3>
+      </div>
       <ScrollToBottom className={styles.playerListContainer}>
-        <Card.Body>
-            {renderableHistory}
-        </Card.Body>
+        <div className="uk-card-body">
+          <div className={`${styles.playerListContainer} uk-card uk-padding-small`}>
+          {renderableHistory}
+          </div>
+        </div>
       </ScrollToBottom>
-    </Card>
+    </div>
   )
-  
-  
 }
